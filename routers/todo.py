@@ -24,7 +24,9 @@ router = APIRouter(
     tags=["Todo"],
 )
 
-templates = Jinja2Templates(directory="app/templates")
+script_dir = os.path.dirname(__file__)
+template_dir = os.path.join(os.path.dirname(script_dir), "templates")
+templates = Jinja2Templates(directory=template_dir)
 
 # ✅ Request Model
 class TodoRequest(BaseModel):
@@ -162,7 +164,7 @@ async def create_todo(user : user_dependency , db: DbSession, todo_request: Todo
     db.refresh(todo) # Get ID for subtasks
 
     # Save Subtasks
-    from models import Subtask
+    from ..models import Subtask
     for sub_content in subtask_list:
         subtask = Subtask(content=sub_content, todo_id=todo.id)
         db.add(subtask)

@@ -14,7 +14,7 @@ app = FastAPI()
 script_dir = os.path.dirname(__file__)
 st_abs_path = os.path.join(script_dir, 'static')
 
-app.mount("/static", StaticFiles(directory="st_abs_path"), name="static")
+app.mount("/static", StaticFiles(directory=st_abs_path), name="static")
 
 @app.get("/")
 def read_root(request: Request):
