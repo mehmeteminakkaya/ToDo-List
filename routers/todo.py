@@ -4,9 +4,9 @@ from pydantic import BaseModel, Field
 from starlette import status
 from sqlalchemy.orm import Session
 from starlette.responses import RedirectResponse
-from ..database import SessionLocal
-from ..models import Todo
-from ..routers.auth import get_current_user
+from database import SessionLocal
+from models import Todo
+from routers.auth import get_current_user
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from dotenv import load_dotenv
@@ -52,7 +52,7 @@ DbSession = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[dict, Depends(get_current_user)]
 
 def redirect_to_login():
-    redirect_response = RedirectResponse(url="/auth/login-page", status_code=status.HTTP_301_MOVED_PERMANENTLY)
+    redirect_response = RedirectResponse(url="/auth/login-page", status_code=status.HTTP_302_FOUND)
     redirect_response.delete_cookie("access_token")
     return redirect_response
 
@@ -164,7 +164,7 @@ async def create_todo(user : user_dependency , db: DbSession, todo_request: Todo
     db.refresh(todo) # Get ID for subtasks
 
     # Save Subtasks
-    from ..models import Subtask
+    from models import Subtask
     for sub_content in subtask_list:
         subtask = Subtask(content=sub_content, todo_id=todo.id)
         db.add(subtask)

@@ -3,10 +3,10 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from starlette import status
 from starlette.responses import HTMLResponse, RedirectResponse
-from .database import engine
-from .models import Base
-from .routers.auth import router as auth_router
-from .routers.todo import router as todo_router
+from database import engine
+from models import Base
+from routers.auth import router as auth_router
+from routers.todo import router as todo_router
 import os
 
 app = FastAPI()

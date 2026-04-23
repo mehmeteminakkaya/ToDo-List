@@ -8,8 +8,8 @@ from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from starlette import status
 from fastapi.security import OAuth2PasswordRequestForm , OAuth2PasswordBearer
-from ..database import SessionLocal
-from ..models import Users
+from database import SessionLocal
+from models import Users
 from fastapi.templating import Jinja2Templates
 import os
 
@@ -69,6 +69,8 @@ def authenticate_user(username: str, password: str , db):
 
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
+    if token is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication token missing")
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
@@ -76,11 +78,11 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
         user_role = payload.get("role")
 
         if username is None or user_id is None:
-            raise HTTPException(status_code=401, detail="Invalid token")
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token payload")
         return {"username": username, "id": user_id , 'role': user_role}
 
     except JWTError:
-        raise HTTPException(status_code=401, detail="Invalid token")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
 
 @router.get("/login-page")
 def render_login_page(request: Request):
