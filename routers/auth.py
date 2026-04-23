@@ -60,7 +60,11 @@ def create_access_token(username : str , user_id : int , role : str , expires_de
 
 
 def authenticate_user(username: str, password: str , db):
-    user = db.query(Users).filter(Users.username == username).first()
+    # Check both username and email to be user-friendly
+    user = db.query(Users).filter(
+        (Users.username == username) | (Users.email == username)
+    ).first()
+    
     if not user:
         return False
     if not bcrypt_context.verify(password, user.hashed_password):
@@ -95,6 +99,16 @@ def render_register_page(request: Request):
 
 @router.post("/" , status_code=status.HTTP_201_CREATED)
 async def create_user(db: DbSession, create_user_request: CreateUserRequest):
+    # Check if user already exists
+    existing_user = db.query(Users).filter(
+        (Users.username == create_user_request.username) | 
+        (Users.email == create_user_request.email)
+    ).first()
+    
+    if existing_user:
+        detail = "Username already exists" if existing_user.username == create_user_request.username else "Email already exists"
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=detail)
+
     user = Users(
         username=create_user_request.username,
         first_name=create_user_request.first_name,
@@ -105,8 +119,13 @@ async def create_user(db: DbSession, create_user_request: CreateUserRequest):
         hashed_password=bcrypt_context.hash(create_user_request.password),
         phone_number=create_user_request.phone_number
     )
-    db.add(user)
-    db.commit()
+    
+    try:
+        db.add(user)
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Could not create user")
 
 
 @router.post("/token" , response_model=Token)
