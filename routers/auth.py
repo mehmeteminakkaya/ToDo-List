@@ -11,6 +11,7 @@ from fastapi.security import OAuth2PasswordRequestForm , OAuth2PasswordBearer
 from ..database import SessionLocal
 from ..models import Users
 from fastapi.templating import Jinja2Templates
+import os
 
 router = APIRouter(
     prefix="/auth",
