@@ -1,0 +1,61 @@
+{% include 'layout.html' %}
+
+<div class="container py-5">
+    <div class="form-container wide">
+        <div class="form-card">
+            <h2>📝 Görevi Revize Et</h2>
+            <p class="subtitle">Bu görev için planlarını veya durumunu istediğin zaman güncelleyebilirsin.</p>
+            
+            <form id="editTodoForm">
+                <div class="form-group">
+                    <label for="title">Görev Başlığı</label>
+                    <input type="text" id="title" class="form-control form-input" name="title" 
+                           value="{{todo.title}}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Detaylı Açıklama (AI Tarafından İyileştirildi)</label>
+                    <textarea id="description" name="description" class="form-control form-input" rows="5" 
+                              required>{{todo.description}}</textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="priority">Öncelik Seviyesi</label>
+                        <select id="priority" name="priority" class="form-control form-input">
+                            <option value="1" {% if todo.priority == 1 %} selected {% endif %}>🟢 1 - Düşük</option>
+                            <option value="2" {% if todo.priority == 2 %} selected {% endif %}>🔵 2 - Normal</option>
+                            <option value="3" {% if todo.priority == 3 %} selected {% endif %}>🟡 3 - Orta</option>
+                            <option value="4" {% if todo.priority == 4 %} selected {% endif %}>🟠 4 - Yüksek</option>
+                            <option value="5" {% if todo.priority == 5 %} selected {% endif %}>🔴 5 - Kritik</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Durum</label>
+                        <label class="toggle-wrapper">
+                            <input type="checkbox" name="completed" class="toggle-input" {% if todo.completed %} checked {% endif %}>
+                            <div class="toggle-switch"></div>
+                            <span class="toggle-label">Tamamlandı</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-footer">
+                    <button type="submit" class="btn-accent">
+                        Değişiklikleri Kaydet
+                    </button>
+                    <button id="deleteButton" type="button" class="btn-danger">
+                        Görevi Sil
+                    </button>
+                    <a href="/todo/todo-page" class="btn-ghost">Vazgeç</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+

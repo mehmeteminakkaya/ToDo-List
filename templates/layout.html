@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo Gemini — Premium AI Assistant</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/bootstrap.css') }}">
+    <!-- Custom Premium CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/base.css') }}">
+</head>
+<body class="page-content">
+
+  {% include 'navbar.html' %}
+
+  <!-- Toast Notification System -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ✨ AI Assistant Sidebar -->
+  <div id="ai-sidebar" class="ai-sidebar">
+      <div class="ai-sidebar-header">
+          <h4 class="mb-0">✨ AI Asistan</h4>
+          <button class="btn-ghost p-1" onclick="toggleAISidebar()">✕</button>
+      </div>
+      <div id="ai-chat-messages" class="ai-chat-messages">
+          <div class="chat-bubble ai">
+              Merhaba! Ben Gemini. Yapılacak işlerin konusunda sana nasıl yardımcı olabilirim?
+          </div>
+      </div>
+      <div class="ai-chat-input-area">
+          <form id="aiChatForm" class="chat-input-wrapper">
+              <input type="text" id="aiChatInput" class="form-input" placeholder="Bir şeyler sor..." required>
+              <button type="submit" class="btn-accent p-2">Gönder</button>
+          </form>
+      </div>
+  </div>
+
+  <!-- AI Toggle Button -->
+  <div class="btn-sidebar-toggle" onclick="toggleAISidebar()" title="AI Asistan ile Konuş">
+      <span>✨</span>
+  </div>
+
+  <main class="container">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+    <script src="{{ url_for('static', path='/js/jquery-slim.js') }}"></script>
+    <script src="{{ url_for('static', path='/js/popper.js') }}"></script>
+    <script src="{{ url_for('static', path='/js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', path='/js/base.js') }}" defer></script>
+</body>
+</html>

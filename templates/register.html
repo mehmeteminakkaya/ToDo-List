@@ -1,0 +1,70 @@
+{% include 'layout.html' %}
+
+<div class="container py-5">
+  <div class="form-container wide">
+    <div class="form-card">
+      <div class="text-center mb-4">
+          <span style="font-size: 3rem;">👋</span>
+          <h2 class="mt-2 text-white">Ailemize Katıl!</h2>
+          <p class="subtitle">Sadece birkaç adımda kendi AI planlayıcını oluştur.</p>
+      </div>
+
+      <form id="registerForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>E-posta Adresi</label>
+            <input type="email" class="form-control form-input" name="email" placeholder="ornek@mail.com" required>
+          </div>
+          <div class="form-group">
+            <label>Kullanıcı Adı</label>
+            <input type="text" class="form-control form-input" name="username" placeholder="kullanici_adi" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Adınız</label>
+            <input type="text" class="form-control form-input" name="firstname" placeholder="John" required>
+          </div>
+          <div class="form-group">
+            <label>Soyadınız</label>
+            <input type="text" class="form-control form-input" name="lastname" placeholder="Doe" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Rol / Meslek</label>
+            <input type="text" class="form-control form-input" name="role" placeholder="Örn: Yazılımcı" required>
+          </div>
+          <div class="form-group">
+            <label>Telefon Numarası</label>
+            <input type="text" class="form-control form-input" name="phone_number" placeholder="05XX XXX XX XX" autocomplete="tel" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Şifre Oluştur</label>
+          <input type="password" class="form-control form-input" name="password" placeholder="••••••••" autocomplete="new-password" required>
+        </div>
+        <div class="form-group">
+          <label>Şifre Doğrulama</label>
+          <input type="password" class="form-control form-input" name="password2" placeholder="••••••••" autocomplete="new-password" required>
+        </div>
+
+        <button type="submit" class="btn-accent w-100 mt-3">Hesabımı Oluştur</button>
+      </form>
+
+      <div class="form-link text-center">
+        Zaten bir hesabın var mı? <a href="/auth/login-page">Giriş Yap</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+

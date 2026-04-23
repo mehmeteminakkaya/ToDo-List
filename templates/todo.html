@@ -1,0 +1,118 @@
+{% include 'layout.html' %}
+
+<div class="container py-4">
+    <!-- Dashboard Header & Stats -->
+    <div class="row mb-4 align-items-end">
+        <div class="col-md-6 mb-3 mb-md-0">
+            <h2 class="mb-1">Haftalık Panoramam</h2>
+            <p class="text-secondary small">Gemini ile zenginleştirilmiş akıllı görev listen.</p>
+        </div>
+        <div class="col-md-6">
+            <div class="progress-wrapper">
+                <div class="progress-label">
+                    <span>Genel Tamamlanma</span>
+                    <span>%{{ stats.rate }}</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-bar-fill" style="width: {{ stats.rate }}%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number stat-accent">{{ stats.total }}</div>
+            <div class="stat-label">Toplam</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number stat-success">{{ stats.completed }}</div>
+            <div class="stat-label">Biten</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number stat-warning">{{ stats.pending }}</div>
+            <div class="stat-label">Bekleyen</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number stat-info">✨ AI</div>
+            <div class="stat-label">Asistan</div>
+        </div>
+    </div>
+
+    <!-- Todo List Selection -->
+    <div class="todo-list">
+        {% if todos %}
+            {% for todo in todos %}
+            <div class="todo-item priority-{{ todo.priority }} {% if todo.completed %}completed-item{% endif %}" 
+                 onclick="window.location.href='/todo/edit-todo-page/{{todo.id}}'">
+                
+                <div class="todo-checkbox {% if todo.completed %}checked{% endif %}" 
+                     onclick="event.stopPropagation(); toggleTodo('{{ todo.id }}')">
+                </div>
+                
+                <div class="todo-content">
+                    <div class="todo-title">{{ todo.title }}</div>
+                    <div class="todo-description">{{ todo.description|truncate(80) }}</div>
+                    
+                    {% if todo.subtasks %}
+                    <div class="mt-2 text-muted small">
+                        <span class="mr-2">📋 {{ todo.subtasks|length }} Alt Adım</span>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="todo-meta">
+                    <span class="priority-badge p-{{ todo.priority }}">
+                        Öncelik {{ todo.priority }}
+                    </span>
+                    <button class="btn-edit d-none d-md-block">Detaylar</button>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <!-- Empty State -->
+            <div class="empty-state glass-card">
+                <div class="empty-state-icon">📝</div>
+                <h3>Henüz görev yok!</h3>
+                <p>Nereden başlayacağını bilmiyorsan "Yeni Ekle" butonuna tıkla ve Gemini'ye sadece fikrini söyle.</p>
+                <a href="/todo/add-todo-page" class="btn-accent">İlk Görevi Ekle</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Floating Action Button -->
+<button class="fab" onclick="window.location.href='/todo/add-todo-page'" title="Yeni Görev Ekle">
+    +
+</button>
+
+<script>
+    // Todo listesi için basit toggle fonksiyonu (base.js'e de eklenebilir)
+    async function toggleTodo(id) {
+        try {
+            const token = getCookie('access_token');
+            const response = await fetch(`/todo/todo/${id}/toggle`, {
+                method: 'PATCH',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (response.ok) {
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('Toggle hatası:', error);
+        }
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+</script>
+
+
+
+
+
+

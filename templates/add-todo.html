@@ -1,0 +1,49 @@
+{% include 'layout.html' %}
+
+<div class="container py-5">
+    <div class="form-container wide">
+        <div class="form-card">
+            <h2>✨ Yeni Bir Vizyon Oluştur</h2>
+            <p class="subtitle">Sadece başlığı gir, detayları ve alt görevleri AI (Gemini) senin için planlasın.</p>
+            
+            <form id="todoForm">
+                <div class="form-group">
+                    <label for="title">Görevin Nedir? (Title)</label>
+                    <input type="text" id="title" class="form-control form-input" name="title" 
+                           placeholder="Örn: Sunum Hazırla veya Araba Yıka" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Eklemek İstediğin Notlar? (Opsiyonel)</label>
+                    <textarea id="description" name="description" class="form-control form-input" rows="3" 
+                              placeholder="Burayı boş bırakırsan AI detaylı bir açıklama üretecektir..."></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="priority">Öncelik Seviyesi</label>
+                        <select id="priority" name="priority" class="form-control form-input">
+                            <option value="1">🟢 1 - Düşük</option>
+                            <option value="2">🔵 2 - Normal</option>
+                            <option value="3">🟡 3 - Orta</option>
+                            <option value="4">🟠 4 - Yüksek</option>
+                            <option value="5" selected>🔴 5 - Kritik</option>
+                        </select>
+                        <small class="text-muted mt-2 d-block">AI bu önceliği otomatik optimize edebilir.</small>
+                    </div>
+                </div>
+                
+                <div class="form-footer">
+                    <button type="submit" id="addBtn" class="btn-accent">
+                        <span class="btn-text">Görevi Oluştur</span>
+                    </button>
+                    <a href="/todo/todo-page" class="btn-ghost">Vazgeç</a>
+                </div>
+            </form>
+        </div>
+        
+        <div class="form-link">
+             Yapay zeka asistanın her zaman yanında. ✨
+        </div>
+    </div>
+</div>
