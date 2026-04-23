@@ -4,9 +4,9 @@ from pydantic import BaseModel, Field
 from starlette import status
 from sqlalchemy.orm import Session
 from starlette.responses import RedirectResponse
-from database import SessionLocal
-from models import Todo
-from routers.auth import get_current_user
+from ..database import SessionLocal
+from ..models import Todo
+from ..routers.auth import get_current_user
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from dotenv import load_dotenv
@@ -24,7 +24,7 @@ router = APIRouter(
     tags=["Todo"],
 )
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="app/templates")
 
 # ✅ Request Model
 class TodoRequest(BaseModel):
@@ -289,4 +289,4 @@ def create_todo_with_gemini(todo_string : str):
         "description": raw_content,
         "priority": 3,
         "subtasks": []
-    }
+    }

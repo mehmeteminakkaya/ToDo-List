@@ -8,8 +8,8 @@ from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from starlette import status
 from fastapi.security import OAuth2PasswordRequestForm , OAuth2PasswordBearer
-from database import SessionLocal
-from models import Users
+from ..database import SessionLocal
+from ..models import Users
 from fastapi.templating import Jinja2Templates
 
 router = APIRouter(
@@ -17,7 +17,7 @@ router = APIRouter(
     tags=["Authentication"],
 )
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="app/templates")
 
 SECRET_KEY = "f8dsf70sad07ef0708s7dsv87dsv0"
 ALGORITHM = "HS256"
